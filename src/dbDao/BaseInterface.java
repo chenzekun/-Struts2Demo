@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 public interface BaseInterface {
-
+//444444444444444
 	public boolean Insert(String sql, Object[] arr);
 
 	public boolean Delete(String sql, Object[] arr);
