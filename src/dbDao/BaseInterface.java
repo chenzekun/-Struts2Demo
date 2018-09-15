@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 public interface BaseInterface {
-	//测试3333333333333333  git
+	//测试4444444444444  git
 	public boolean Insert(String sql, Object[] arr);
 
 	public boolean Delete(String sql, Object[] arr);
