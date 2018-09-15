@@ -25,6 +25,7 @@ public class test {
 	//private 
 	@Test
 	public void ConditionQueryUser() {
+		//GitHub  测试2222222222222222222222
 		
 		//UserDao userDao = (UserDao) DaoFactory.getInstance("dbDao.UserDao");
 
