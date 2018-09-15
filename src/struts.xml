@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<!--
+		package：包，用于对Action进行封装。 1、name：包名，根元素下可以有多个包，彼此之间不能重名。
+		2、extends：继承，用于指定继承的包，相当于将继承包下的配置信息复制到了当前包下。
+		3、namespace：命名空间，用于规定Action的访问路径，必须以“/”开头。 
+		4、请求Action时，按照如下格式拼写URL：
+		http://IP:PORT/ProjectName/NAMESPACE/ACTIONNAME
+	-->
+	
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+		<!--
+			action：业务控制器，用于注册业务控制器组件（类）。 
+			1、name：action名称，用于规定Action的访问路径。
+			一个包下可以有多个action，彼此之间不能重名。 
+			2、class：业务控制器组件，用于指定业务控制器对应的类。
+			3、method：方法，用于指定访问当前action时要调用的方法。
+		-->
+		<!--
+			result：输出组件，用于转发、重定向、直接输出。 
+			1、name：名称，一个action下可以有多个result，彼此之间不能重名。
+			2、默认做转发，标记内容设置成转发的页面。
+		-->
+	<package name="loginPageage" namespace="/" extends="struts-default">
+		<action name="loginAction" class="org.great.action.LoginAction">
+			<result name="success">html/backstage.jsp</result>
+			<result name="error">html/error.jsp</result>
+		</action>
+		<action name="registeAction" class="org.great.action.RegisteAction">
+			<result name="success">html/success.jsp</result>
+			<result name="">html/success.jsp</result>
+		</action>
+		<action name="imageAction" class="org.great.action.ImageAction">
+			<result name="success" type="stream">
+			<param name="inputName">inputStream</param>
+			</result>
+			<result name="error">html/error.jsp</result>
+		</action>
+	</package>
+	
+	<package name="day01" namespace="/" extends="struts-default,json-default">
+		<interceptors>
+			<interceptor name="FirstInterceptor"
+				class="org.great.interceptor.FirstInterceptor"></interceptor>
+			<interceptor-stack name="stack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="FirstInterceptor"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="stack"></default-interceptor-ref>
+		<global-results>
+			<result name="error">html/login.jsp</result>
+		</global-results>
+		
+		<action name="userAction" class="org.great.action.UserAction">
+			<result name="success">html/usermanage.jsp</result>
+			<result name="toupdate">html/updateuser.jsp</result>
+			<result name="error">html/error.jsp</result>
+			
+			<result name="pagequerysuccess" type="json">
+			<param name="root">pageQueryData</param>
+			</result>
+		</action>
+	</package>
+	
+	<package name="day02" namespace="/checkInput" extends="struts-default,json-default">
+	<action name="loginAction" class="org.great.action.LoginAction">
+			<result name="success" type="json">
+				<param name="root">msg</param>
+			</result>
+	</action>
+	</package>
+	
+	
+<!--	设置默认编码-->
+	<constant name="struts.i18n.encoding" value="utf-8"></constant>
+<!--	设置默认上传文件时临时文件存放文件夹-->
+	<constant name="struts.multipart.saveDir" value="d:\"></constant>
+
+	<package name="struts2" extends="struts-default">
+		<action name="upload" class="org.great.action.UploadAction">
+			<result name="result">html/result.jsp</result>
+			<result name="input">html/index.jsp</result>
+<!--	重定义fileUpload拦截器,fileUpload是固定	的	-->
+			<interceptor-ref name="fileUpload">
+<!--				maximumSize:固定参数，409600：以字节为单位，409600表示400k，指每一个文件的最大值，而不是指所有文件的总大小-->
+				<param name="maximumSize">409600</param>
+<!--				allowedTypes:固定参数  application/vnd.ms-powerpointt：ppt文件类型，从tomcat的安装目录下的conf\web里定义了所有的文件类型-->
+				<param name="allowedTypes">application/vnd.ms-powerpoint,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document</param>
+			</interceptor-ref>
+<!--	一个action中有配置拦截器，就必须手动加载默认拦截器		-->
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+		
+		
+
+		
+	</package>
+	
+	<package name="doc" namespace="/" extends="struts-default,json-default">
+	
+		<action name="docAction" class="org.great.action.DocAction">
+			<result name="success">html/download.jsp</result>
+		</action>
+	<!--	文件下载	-->
+		<action name="download" class="org.great.action.DownloadAction">
+<!--	stream:参考Referenced Libraries/struts2-core-2.0.11.1.jar/struts-default.xml,stream专门用来文件下载-->	
+			<result name="success" type="stream">
+<!--配置的三个参数参考	Referenced Libraries/struts2-core-2.0.11.1.jar/org.apache.struts2.dispatcher/StreamResult.class		-->
+				<param name="contentType">application/vnd.ms-powerpoint,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document</param>
+<!--		下载后生成的文件名		-->
+				<param name="contentDisposition">attachment;filename=${fname}</param>
+<!--			定义了调用action中的哪个方法，方法名为：getDownloadFile(),所以这儿用downloadFile（去掉get，将D改为d）	-->
+				<param name="inputName">downloadFile</param>
+			</result>
+		</action>
+	</package>
+	
+</struts>

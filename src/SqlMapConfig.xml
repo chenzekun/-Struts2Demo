@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE configuration PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-config.dtd">
+<configuration>
+
+	<!-- 配置连接 -->
+	<environments default="environment">
+		<environment id="environment">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.OracleDriver" />
+				<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
+				<property name="username" value="strusts2demo" />
+				<property name="password" value="123456" />				
+			</dataSource>
+		</environment>
+	</environments>
+	
+	 <mappers>
+	 	<mapper resource="org/great/bean/DocBean.xml"/>
+	 	<mapper resource="org/great/bean/UserBean.xml"/>
+	 </mappers>
+
+	 
+</configuration>

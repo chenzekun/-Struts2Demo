@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="dbDao.UserInterface">
+<!-- 	<insert id="addDoc" parameterType="org.great.bean.DocBean">
+		insert into TBLDOC(docId, userId, docTitle, docInfo, docClass, uploadTime, downloadCount, docIntegral, docUrl)
+		values(SEQID.nextval,#{userId},#{docTitle},#{docInfo},#{docClass},#{uploadTime},#{downloadCount},#{docIntegral},#{docUrl})
+	</insert> -->
+	
+ 	 <select id="ConditionPageQueryUserX" 
+ 	
+	 resultType="org.great.bean.UserBean" > <!--  parameterType="java.lang.StringBuffer,java.lang.Integer,java.lang.Integer"  -->
+	<!--  <if test="conditionSql!=null"> -->
+	SELECT * FROM  (  SELECT A.*, ROWNUM RN  FROM (SELECT * FROM (${conditionSql})) A WHERE ROWNUM &lt;= #{pageNo}*#{dataCount})WHERE RN &gt;= ((#{pageNo}-1)*#{dataCount}+1)
+	 <!-- SELECT * FROM  (  SELECT A.*, ROWNUM RN  FROM (SELECT * FROM (#{conditionSql})) A WHERE ROWNUM &lt;= #{pageNo}*#{dataCount})WHERE RN &gt;= ((#{pageNo}-1)*#{dataCount}+1) -->
+	 <!-- </if> -->
+	 </select>
+	 
+	 <select id="ConditionQueryUserX" 
+ 	 parameterType="String"
+	 resultType="org.great.bean.UserBean" > <!--  parameterType="java.lang.StringBuffer,java.lang.Integer,java.lang.Integer"  -->
+	<!--  <if test="conditionSql!=null"> -->
+	${conditionSql}
+	 <!-- SELECT * FROM  (  SELECT A.*, ROWNUM RN  FROM (SELECT * FROM (#{conditionSql})) A WHERE ROWNUM &lt;= #{pageNo}*#{dataCount})WHERE RN &gt;= ((#{pageNo}-1)*#{dataCount}+1) -->
+	 <!-- </if> -->
+	 </select>
+</mapper>
+

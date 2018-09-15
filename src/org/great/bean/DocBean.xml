@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="dbDao.DocInterface">
+	<insert id="addDoc" parameterType="org.great.bean.DocBean">
+		insert into TBLDOC(docId, userId, docTitle, docInfo, docClass, uploadTime, downloadCount, docIntegral, docUrl)
+		values(SEQID.nextval,#{userId},#{docTitle},#{docInfo},#{docClass},#{uploadTime},#{downloadCount},#{docIntegral},#{docUrl})
+	</insert>
+	
+ 	 <select id="QueryDoc" 
+	 resultType="org.great.bean.DocBean" > <!-- parameterType="" -->
+	 	select * from TBLDOC where 1=1
+	 </select>
+	 
+    
+	<select id="QueryDocX" parameterType="org.great.bean.UserBean" resultMap="docListResult">
+         select u.*,d.* from TBLUSER u join TBLDOC d on u.USERID=d.USERID and u.USERID=#{userId}
+    </select>
+	 
+<!-- 	<resultMap type="employee_management.entity.User" id="userList">
+        <id property="user_id" column="user_id" javaType="java.lang.Integer" />
+        <result property="user_name" column="user_name" javaType="java.lang.String" />
+        <result property="user_gender" column="user_gender" javaType="java.lang.String" />
+        <result property="user_email" column="user_email" javaType="java.lang.String" />
+        <result property="user_phone" column="user_phone" javaType="java.lang.String" />
+        <result property="user_address" column="user_address" javaType="java.lang.String" />
+        <result property="user_birthday" column="user_birthday"
+            javaType="java.util.Date" />
+        <result property="department_id" column="department_id"
+            javaType="java.lang.Integer" />
+    </resultMap> -->
+
+<!--    	private int userId;
+	private String name;
+	private String psw;
+	private String sex;
+	private String education;
+	private String job;
+	private Long phone;
+	private String eMail;
+	private String state;
+	private String regTime;
+	private int upNumber;
+	private int downNumber;
+	private int integral;
+	
+	 USERID NUMBER(4,0), 
+	NAME VARCHAR2(20 BYTE), 
+	PWD VARCHAR2(20 BYTE), 
+	SEX VARCHAR2(20 BYTE), 
+	EDUCATION VARCHAR2(32 BYTE), 
+	JOB VARCHAR2(20 BYTE), 
+	PHONE NUMBER(11,0), 
+	EMAIL VARCHAR2(32 BYTE), 
+	STATE VARCHAR2(20 BYTE), 
+	REGTIME VARCHAR2(64 BYTE), 
+	UPNUMBER NUMBER(8,0), 
+	DOWNNUMBER NUMBER(8,0), 
+	INTEGRAL NUMBER(8,0)
+	
+	private int docId;
+	private int userId;
+	private String docTitle;
+	private String docInfo;
+	private String docClass;
+	private String uploadTime;
+	private int downloadCount;
+	private int docIntegral;
+	private String docUrl; -->
+	
+    <resultMap type="org.great.bean.UserBean" id="docListResult"><!-- extends="userList" -->
+            <id property="userId" column="USERID" javaType="java.lang.Integer" />
+            <result property="name" column="NAME" javaType="java.lang.String" />
+            <result property="psw" column="PWD" javaType="java.lang.String" />
+            <result property="sex" column="SEX" javaType="java.lang.String" />
+            <result property="education" column="EDUCATION" javaType="java.lang.String" />
+            <result property="job" column="JOB" javaType="java.lang.String" />
+            <result property="phone" column="PHONE" javaType="java.lang.Long" />
+            <result property="eMail" column="EMAIL" javaType="java.lang.String" />
+            <result property="state" column="STATE" javaType="java.lang.String" />
+            <result property="regTime" column="REGTIME" javaType="java.lang.String" />
+            <result property="upNumber" column="UPNUMBER" javaType="java.lang.Integer" />
+            <result property="downNumber" column="DOWNNUMBER" javaType="java.lang.Integer" />
+            <result property="integral" column="INTEGRAL" javaType="java.lang.Integer" />
+            
+        <collection property="docList" ofType="org.great.bean.DocBean">
+			<id property="docId" column="docId" javaType="java.lang.Integer" />
+            <result property="userId" column="userId" javaType="java.lang.Integer" />
+            <result property="docTitle" column="docTitle" javaType="java.lang.String" />
+            <result property="docInfo" column="docInfo" javaType="java.lang.String" />
+            <result property="docClass" column="docClass" javaType="java.lang.String" />
+            <result property="uploadTime" column="uploadTime" javaType="java.lang.String" />
+            <result property="downloadCount" column="downloadCount" javaType="java.lang.Integer" />
+            <result property="docIntegral" column="docIntegral" javaType="java.lang.Integer" />
+            <result property="docUrl" column="docUrl" javaType="java.lang.String" />
+        </collection>
+        
+    </resultMap>
+
+</mapper>
+
