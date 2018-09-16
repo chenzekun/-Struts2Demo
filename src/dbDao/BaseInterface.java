@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 public interface BaseInterface {
-// 正式测试 222222
+// 正式测试 3333
 	public boolean Insert(String sql, Object[] arr);
 
 	public boolean Delete(String sql, Object[] arr);
