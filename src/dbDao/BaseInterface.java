@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface BaseInterface {
 
-// 分支X测试  添加 1111
+// 分支X测试  添加 2222
 	public boolean Insert(String sql, Object[] arr);
 
 	public boolean Delete(String sql, Object[] arr);
